@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Sumeet ❤️ Dhvani</title>
+<script src="https://cdn.tailwindcss.com"></script>
+
+<style>
+
+/* Animated Background */
+body{
+  background: linear-gradient(-45deg,#ff9a9e,#fad0c4,#fbc2eb,#a6c1ee);
+  background-size:400% 400%;
+  animation:bg 15s ease infinite;
+}
+
+@keyframes bg{
+  0%{background-position:0% 50%}
+  50%{background-position:100% 50%}
+  100%{background-position:0% 50%}
+}
+
+/* Reveal Animation */
+.reveal{
+  opacity:0;
+  transform:translateY(40px) scale(.95);
+  transition:.8s;
+}
+.reveal.active{
+  opacity:1;
+  transform:none;
+}
+
+/* Floating Hearts */
+.heart{
+  position:fixed;
+  bottom:-20px;
+  font-size:20px;
+  animation:float 5s linear forwards;
+  z-index:9999;
+}
+@keyframes float{
+  100%{transform:translateY(-110vh);opacity:0}
+}
+
+/* Gallery Auto Scroll */
+.scroll-box{
+  height:420px;
+  overflow:hidden;
+}
+.scroll-content{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:10px;
+  animation:scroll 40s linear infinite;
+}
+@keyframes scroll{
+  100%{transform:translateY(-50%)}
+}
+
+/* Mobile */
+@media(max-width:640px){
+  h1{font-size:1.7rem}
+  .scroll-box{height:360px}
+}
+
+</style>
+</head>
+
+<body class="min-h-screen flex justify-center p-3">
+
+<!-- BACKGROUND MUSIC -->
+<audio id="bgm" loop preload="auto">
+  <source src="song.mp3" type="audio/mpeg">
+</audio>
+
+
+<!-- LOCK SCREEN -->
+<div id="lock"
+class="bg-white/70 p-6 rounded-xl shadow text-center reveal">
+
+<h2 class="text-2xl mb-4">🔐 Enter Love Password</h2>
+
+<input id="pass"
+type="password"
+placeholder="Her Name ❤️"
+class="p-2 w-full rounded mb-3 text-center">
+
+<button onclick="unlock()"
+class="bg-pink-500 text-white px-5 py-2 rounded-full w-full">
+Unlock 💖
+</button>
+
+</div>
+
+
+<!-- MAIN CONTENT -->
+<div id="main"
+class="hidden max-w-md w-full bg-white/40 backdrop-blur-md p-4 rounded-xl text-center reveal">
+
+
+<!-- HERO -->
+<h1 class="text-3xl font-bold mb-2 reveal">
+Sumeet ❤️ Dhvani
+</h1>
+
+<p class="mb-4 reveal">
+I Love you Dhvani ji more than anything in this whole universe 💞
+</p>
+
+
+<!-- MUSIC BUTTON -->
+<button onclick="toggleMusic()"
+id="musicBtn"
+class="bg-purple-500 text-white px-4 py-2 rounded-full w-full mb-4 reveal">
+🎵 Play Music
+</button>
+
+
+<!-- SLIDESHOW -->
+<div class="mb-6 reveal">
+
+<h2 class="text-xl mb-2">Our Memories 💫</h2>
+
+<div class="h-64 rounded-xl overflow-hidden shadow">
+
+<img id="slide"
+class="w-full h-full object-cover">
+
+</div>
+</div>
+
+
+<!-- GALLERY -->
+<div class="mb-6 reveal">
+
+<h2 class="text-xl mb-3">Our Gallery 📸</h2>
+
+<div class="scroll-box bg-white/30 p-2 rounded-xl">
+
+<div class="scroll-content" id="gallery"></div>
+
+</div>
+</div>
+
+
+<!-- SECRET MESSAGE -->
+<div onclick="showSecret()"
+class="text-pink-700 text-sm cursor-pointer reveal mb-4">
+
+💌 Tap for secret message
+
+</div>
+
+
+<!-- PROPOSAL BUTTON -->
+<button onclick="openProposal()"
+class="bg-red-600 text-white px-5 py-2 rounded-full mb-4 animate-pulse reveal">
+💍 Open Proposal 💍
+</button>
+
+
+</div>
+
+
+
+<!-- SECRET POPUP -->
+<div id="secret"
+class="hidden fixed inset-0 bg-black/60 flex items-center justify-center">
+
+<div class="bg-pink-100 p-6 rounded-xl text-center reveal">
+
+<h2 class="text-xl mb-2">💌 My Love</h2>
+
+<p>You are my forever ❤️</p>
+
+<button onclick="closeSecret()"
+class="mt-3 bg-purple-500 text-white px-4 py-2 rounded w-full">
+Close
+</button>
+
+</div>
+</div>
+
+
+
+<!-- PROPOSAL -->
+<div id="proposal"
+class="hidden fixed inset-0 bg-pink-600/80 flex justify-center items-center p-3 z-50">
+
+<div id="box"
+class="bg-white p-6 rounded-xl text-center shadow-xl relative animate-bounce">
+
+<h2 class="text-2xl mb-2">💍 My Forever Love</h2>
+
+<p class="mb-3">Dhvani ❤️ Will you marry me?</p>
+
+<img id="proposalImg"
+class="w-full h-40 object-cover rounded mb-3">
+
+<div class="flex justify-center gap-4 relative">
+
+<button onclick="yesProposal()"
+class="bg-green-500 text-white px-4 py-2 rounded-full">
+Yes 😍
+</button>
+
+<button id="noBtn"
+class="bg-gray-400 text-white px-4 py-2 rounded-full absolute right-0">
+No 🙈
+</button>
+
+</div>
+</div>
+</div>
+
+
+
+<!-- YES SURPRISE -->
+<div id="yesSurprise"
+class="hidden fixed inset-0 bg-black/70 flex items-center justify-center z-50">
+
+<div class="bg-white p-6 rounded-xl text-center animate-bounce">
+
+<h2 class="text-3xl mb-2">💍 She Said YES 😍</h2>
+
+<p>I Love You Forever ❤️💞</p>
+
+<div class="text-4xl my-3">🎆💖🎊💘💍</div>
+
+<button onclick="closeSurprise()"
+class="bg-pink-500 text-white px-4 py-2 rounded-full w-full">
+Close 💕
+</button>
+
+</div>
+</div>
+
+
+
+<script>
+
+/* YOUR IMAGES */
+const images = [
+
+"https://iili.io/qHeZuR9.md.jpg",
+"https://iili.io/qHeZANe.md.jpg",
+"https://iili.io/qHeZTH7.md.jpg",
+"https://iili.io/qHeZRDu.md.jpg",
+"https://iili.io/qHeZ7ob.md.jpg",
+"https://iili.io/qHeZYVj.md.jpg",
+"https://iili.io/qHeZlKQ.md.jpg",
+"https://iili.io/qHeZaix.md.jpg",
+"https://iili.io/qHeZGHP.md.jpg",
+"https://iili.io/qHeZMR1.md.jpg",
+"https://iili.io/qHeZWDg.md.jpg",
+"https://iili.io/qHeZVOF.jpg",
+"https://iili.io/qHeZhxa.jpg",
+"https://iili.io/qHeZwiv.md.jpg",
+"https://iili.io/qHeZOfR.md.jpg",
+"https://iili.io/qHeZelp.md.jpg",
+"https://iili.io/qHeZkUN.jpg",
+"https://iili.io/qHeZ8JI.md.jpg",
+"https://iili.io/qHeZUOX.md.jpg",
+"https://iili.io/qHeZgbn.md.jpg",
+"https://iili.io/qHeZ4xs.md.jpg",
+"https://iili.io/qHeZ6WG.md.jpg",
+"https://iili.io/qHeZL0l.md.jpg",
+"https://iili.io/qHeZQg2.md.jpg",
+"https://iili.io/qHeZtJS.md.jpg",
+"https://iili.io/qHeZD57.md.jpg",
+"https://iili.io/qHeZbe9.md.jpg",
+"https://iili.io/qHeZmbe.md.jpg",
+"https://iili.io/qHeZyzu.md.jpg",
+"https://iili.io/qHet9Wb.md.jpg",
+"https://iili.io/qHetHsj.md.jpg",
+"https://iili.io/qHetdqx.md.jpg"
+
+];
+
+
+/* BUILD GALLERY */
+const gallery=document.getElementById('gallery');
+
+for(let k=0;k<2;k++){
+images.forEach((img,i)=>{
+
+gallery.innerHTML+=`
+<div class="text-center">
+<img src="${img}"
+class="w-full h-36 rounded-xl object-cover shadow">
+<p class="text-xs mt-1">Memory ${i+1} 💕</p>
+</div>`;
+});
+}
+
+
+/* SLIDER */
+let s=0;
+const slide=document.getElementById('slide');
+slide.src=images[0];
+
+setInterval(()=>{
+s=(s+1)%images.length;
+slide.src=images[s];
+},3000);
+
+
+/* PROPOSAL IMAGE */
+proposalImg.src=images[1];
+
+
+/* MUSIC */
+let playing=false;
+const music=document.getElementById('bgm');
+const btn=document.getElementById('musicBtn');
+
+function toggleMusic(){
+
+if(!playing){
+music.play();
+btn.innerText='⏸ Pause Music';
+}else{
+music.pause();
+btn.innerText='🎵 Play Music';
+}
+
+playing=!playing;
+}
+
+
+/* UNLOCK */
+function unlock(){
+
+const p=pass.value.toLowerCase();
+
+if(p==='dhvani'){
+lock.classList.add('hidden');
+main.classList.remove('hidden');
+
+music.play();
+btn.innerText='⏸ Pause Music';
+playing=true;
+
+startHearts();
+}else alert('Wrong password 💔');
+}
+
+
+/* SECRET */
+function showSecret(){
+secret.classList.remove('hidden');
+}
+function closeSecret(){
+secret.classList.add('hidden');
+}
+
+
+/* REVEAL */
+const reveals=document.querySelectorAll('.reveal');
+
+const obs=new IntersectionObserver(e=>{
+e.forEach(x=>{
+if(x.isIntersecting)
+x.target.classList.add('active');
+});
+},{threshold:.2});
+
+reveals.forEach(r=>obs.observe(r));
+
+
+/* HEARTS */
+function createHeart(){
+
+const h=document.createElement('div');
+h.className='heart';
+
+h.innerText=['❤️','💖','💕','💘','💗']
+[Math.floor(Math.random()*5)];
+
+h.style.left=Math.random()*100+'vw';
+
+h.style.fontSize=(16+Math.random()*20)+'px';
+
+document.body.appendChild(h);
+
+setTimeout(()=>h.remove(),5000);
+}
+
+function startHearts(){
+setInterval(createHeart,900);
+}
+
+window.addEventListener('scroll',createHeart);
+
+
+/* PROPOSAL */
+function openProposal(){
+proposal.classList.remove('hidden');
+}
+
+
+/* RUN NO BUTTON */
+const noBtn=document.getElementById('noBtn');
+
+noBtn.addEventListener('mouseenter',moveNo);
+noBtn.addEventListener('touchstart',moveNo);
+
+function moveNo(){
+
+const box=document.getElementById('box');
+
+const x=Math.random()*(box.offsetWidth-80);
+const y=Math.random()*(box.offsetHeight-40);
+
+noBtn.style.left=x+'px';
+noBtn.style.top=y+'px';
+}
+
+
+/* YES SURPRISE */
+function yesProposal(){
+
+proposal.classList.add('hidden');
+yesSurprise.classList.remove('hidden');
+
+for(let i=0;i<30;i++){
+setTimeout(createHeart,i*100);
+}
+
+music.volume=1;
+music.play();
+}
+
+function closeSurprise(){
+yesSurprise.classList.add('hidden');
+}
+
+</script>
+
+</body>
+</html>
